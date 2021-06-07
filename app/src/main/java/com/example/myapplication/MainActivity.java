@@ -2,21 +2,28 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.myapplication.Fragment.ViewPagerAdapter;
+import com.example.myapplication.Model.Product;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomAdapter bottom;
+    private TabLayout tabLayout;
     private ViewPager viewPager;
-    private BottomNavigationView bottomNavigationView;
+    private ViewPagerAdapter viewPagerAdapter;
+
+    public List<Product> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,53 +32,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String username  = intent.getStringExtra("username");
+        String username = intent.getStringExtra("username");
         System.out.println(username);
 
         viewPager = findViewById(R.id.viewPager);
-        bottomNavigationView =  findViewById(R.id.botnavi);
+        tabLayout = findViewById(R.id.tablayout);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-        bottom = new BottomAdapter(getSupportFragmentManager(), BottomAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPager.setAdapter(bottom);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.e :{
-                        viewPager.setCurrentItem(0);
-                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-
-                    case R.id.s: {
-                        viewPager.setCurrentItem(1);
-                        Toast.makeText(MainActivity.this, "Notification", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-
-                    case R.id.c : {
-                        viewPager.setCurrentItem(2);
-                        Toast.makeText(MainActivity.this, "Infomation", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
-                return true;
-            }
-        });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.exit:
                 System.exit(0);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

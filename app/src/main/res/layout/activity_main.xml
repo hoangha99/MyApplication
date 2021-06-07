@@ -7,19 +7,18 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        app:tabSelectedTextColor="#CC4040"
+        android:layout_height="wrap_content"/>
+
     <androidx.viewpager.widget.ViewPager
         android:layout_weight="5"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/botnavi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemTextColor="@color/black"
-        app:itemIconTint="@color/black"
-        app:menu="@menu/menu_navi" />
 
 
 </LinearLayout>
